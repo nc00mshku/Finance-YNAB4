@@ -3,11 +3,11 @@ use strict;
 use FindBin qw/$Bin/;
 use lib "$Bin/../lib";
 use Finance::YNAB4;
-use Data::Printer;
+
 my $budget = 'TEST~517C3803.ynab4';
 
 my $ynab4 = Finance::YNAB4->new(budget_file => $budget);
-p $ynab4->budgets;die;
+
 for my $cat (@{$ynab4->categories}) {
     my $master_category = $cat->{name};
     next if ($master_category =~ /(Hidden Categories|__Internal__|Income)/);
