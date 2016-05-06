@@ -1,0 +1,51 @@
+{
+  "dataVersion": "4.2",
+  "startVersion": "A-121",
+  "shortDeviceId": "A",
+  "endVersion": "A-124",
+  "formatVersion": null,
+  "items": [
+    {
+      "overspendingHandling": null,
+      "entityVersion": "A-122",
+      "madeWithKnowledge": null,
+      "isTombstone": false,
+      "isResolvedConflict": false,
+      "parentMonthlyBudgetId": "MB/2016-04",
+      "note": null,
+      "entityId": "MCB/2016-04/A30",
+      "entityType": "monthlyCategoryBudget",
+      "categoryId": "A30",
+      "budgeted": 25
+    },
+    {
+      "overspendingHandling": null,
+      "entityVersion": "A-123",
+      "madeWithKnowledge": null,
+      "isTombstone": false,
+      "isResolvedConflict": false,
+      "parentMonthlyBudgetId": "MB/2016-04",
+      "note": null,
+      "entityId": "MCB/2016-04/A31",
+      "entityType": "monthlyCategoryBudget",
+      "categoryId": "A31",
+      "budgeted": 50
+    },
+    {
+      "overspendingHandling": null,
+      "entityVersion": "A-124",
+      "madeWithKnowledge": null,
+      "isTombstone": false,
+      "isResolvedConflict": false,
+      "parentMonthlyBudgetId": "MB/2016-04",
+      "note": null,
+      "entityId": "MCB/2016-04/A33",
+      "entityType": "monthlyCategoryBudget",
+      "categoryId": "A33",
+      "budgeted": 200
+    }
+  ],
+  "publishTime": "Thu May 5 18:57:18 GMT-0500 2016",
+  "deviceGUID": "DD0101B4-D201-000E-D5C5-50DE1FA56F0C",
+  "budgetDataGUID": null
+}

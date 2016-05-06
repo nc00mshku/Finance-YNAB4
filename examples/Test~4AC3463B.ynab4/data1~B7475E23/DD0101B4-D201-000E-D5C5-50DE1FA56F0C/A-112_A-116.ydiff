@@ -1,0 +1,64 @@
+{
+  "dataVersion": "4.2",
+  "startVersion": "A-112",
+  "shortDeviceId": "A",
+  "endVersion": "A-116",
+  "formatVersion": null,
+  "items": [
+    {
+      "overspendingHandling": null,
+      "entityVersion": "A-113",
+      "madeWithKnowledge": null,
+      "isTombstone": false,
+      "isResolvedConflict": false,
+      "parentMonthlyBudgetId": "MB/2016-04",
+      "note": null,
+      "entityId": "MCB/2016-04/A19",
+      "entityType": "monthlyCategoryBudget",
+      "categoryId": "A19",
+      "budgeted": 150
+    },
+    {
+      "overspendingHandling": null,
+      "entityVersion": "A-114",
+      "madeWithKnowledge": null,
+      "isTombstone": false,
+      "isResolvedConflict": false,
+      "parentMonthlyBudgetId": "MB/2016-04",
+      "note": null,
+      "entityId": "MCB/2016-04/A20",
+      "entityType": "monthlyCategoryBudget",
+      "categoryId": "A20",
+      "budgeted": 50
+    },
+    {
+      "overspendingHandling": null,
+      "entityVersion": "A-115",
+      "madeWithKnowledge": null,
+      "isTombstone": false,
+      "isResolvedConflict": false,
+      "parentMonthlyBudgetId": "MB/2016-04",
+      "note": null,
+      "entityId": "MCB/2016-04/A21",
+      "entityType": "monthlyCategoryBudget",
+      "categoryId": "A21",
+      "budgeted": 50
+    },
+    {
+      "overspendingHandling": null,
+      "entityVersion": "A-116",
+      "madeWithKnowledge": null,
+      "isTombstone": false,
+      "isResolvedConflict": false,
+      "parentMonthlyBudgetId": "MB/2016-04",
+      "note": null,
+      "entityId": "MCB/2016-04/A22",
+      "entityType": "monthlyCategoryBudget",
+      "categoryId": "A22",
+      "budgeted": 25
+    }
+  ],
+  "publishTime": "Thu May 5 18:57:08 GMT-0500 2016",
+  "deviceGUID": "DD0101B4-D201-000E-D5C5-50DE1FA56F0C",
+  "budgetDataGUID": null
+}

@@ -1,0 +1,77 @@
+{
+  "dataVersion": "4.2",
+  "startVersion": "A-116",
+  "shortDeviceId": "A",
+  "endVersion": "A-121",
+  "formatVersion": null,
+  "items": [
+    {
+      "overspendingHandling": null,
+      "entityVersion": "A-117",
+      "madeWithKnowledge": null,
+      "isTombstone": false,
+      "isResolvedConflict": false,
+      "parentMonthlyBudgetId": "MB/2016-04",
+      "note": null,
+      "entityId": "MCB/2016-04/A24",
+      "entityType": "monthlyCategoryBudget",
+      "categoryId": "A24",
+      "budgeted": 1375
+    },
+    {
+      "overspendingHandling": null,
+      "entityVersion": "A-118",
+      "madeWithKnowledge": null,
+      "isTombstone": false,
+      "isResolvedConflict": false,
+      "parentMonthlyBudgetId": "MB/2016-04",
+      "note": null,
+      "entityId": "MCB/2016-04/A25",
+      "entityType": "monthlyCategoryBudget",
+      "categoryId": "A25",
+      "budgeted": 50
+    },
+    {
+      "overspendingHandling": null,
+      "entityVersion": "A-119",
+      "madeWithKnowledge": null,
+      "isTombstone": false,
+      "isResolvedConflict": false,
+      "parentMonthlyBudgetId": "MB/2016-04",
+      "note": null,
+      "entityId": "MCB/2016-04/A26",
+      "entityType": "monthlyCategoryBudget",
+      "categoryId": "A26",
+      "budgeted": 50
+    },
+    {
+      "overspendingHandling": null,
+      "entityVersion": "A-120",
+      "madeWithKnowledge": null,
+      "isTombstone": false,
+      "isResolvedConflict": false,
+      "parentMonthlyBudgetId": "MB/2016-04",
+      "note": null,
+      "entityId": "MCB/2016-04/A27",
+      "entityType": "monthlyCategoryBudget",
+      "categoryId": "A27",
+      "budgeted": 50
+    },
+    {
+      "overspendingHandling": null,
+      "entityVersion": "A-121",
+      "madeWithKnowledge": null,
+      "isTombstone": false,
+      "isResolvedConflict": false,
+      "parentMonthlyBudgetId": "MB/2016-04",
+      "note": null,
+      "entityId": "MCB/2016-04/A28",
+      "entityType": "monthlyCategoryBudget",
+      "categoryId": "A28",
+      "budgeted": 50
+    }
+  ],
+  "publishTime": "Thu May 5 18:57:13 GMT-0500 2016",
+  "deviceGUID": "DD0101B4-D201-000E-D5C5-50DE1FA56F0C",
+  "budgetDataGUID": null
+}
