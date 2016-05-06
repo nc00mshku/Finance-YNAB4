@@ -3,10 +3,15 @@ package Finance::YNAB4;
 use 5.006;
 use strict;
 use warnings;
+use Moose;
+use namespace::autoclean;
+use Sort::Naturally;
+use JSON;
+use Data::Printer;
 
 =head1 NAME
 
-Finance::YNAB4 - The great new Finance::YNAB4!
+Finance::YNAB4 - YNAB4 detail extraction
 
 =head1 VERSION
 
@@ -16,38 +21,69 @@ Version 0.01
 
 our $VERSION = '0.01';
 
+has 'budget_file', is => 'ro', isa => 'Str', required => 1;
+
+has 'accounts', is => 'ro', isa => 'ArrayRef', writer => 'store_accounts';
+has 'categories', is => 'ro', isa => 'ArrayRef', writer => 'store_categories';
+has 'budgets', is => 'ro', isa => 'ArrayRef', writer => 'store_budgets';
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
+Reads/Parses ynab4 json file
 
     use Finance::YNAB4;
 
-    my $foo = Finance::YNAB4->new();
-    ...
+    my $ynab4 = Finance::YNAB4->new(budget_file => 'FILE_PATH');
 
-=head1 EXPORT
+    my @categories = $ynab4->categories;
 
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
+=cut
+
+sub BUILD {
+    my $self = shift;
+    $self->parse_budget;
+}
 
 =head1 SUBROUTINES/METHODS
 
-=head2 function1
+=head2 get_categories
+
+    return array of category names
 
 =cut
-
-sub function1 {
+sub get_categories {
+    my $self = shift;
 }
 
-=head2 function2
+=head2 parse_budet
+    
+    read and store details from y4 json file
 
 =cut
+sub parse_budget {
+    my $self = shift;
+    
+    my $ynab_budget_dir = $self->budget_file;
+    my @data_folders = nsort glob "$ynab_budget_dir/data*";
+    my $ynab4_dir = pop @data_folders;
+    my $data_file_name = '/*/Budget.yfull';
+    my @files = nsort glob "$ynab4_dir".$data_file_name;
+    my $budget_file = pop @files;
+    my $budget_data;
+    {
+        local $/;
+        open  my $fh, "<", $budget_file or die "could not open $budget_file: $!";
+        $budget_data = <$fh>;
+    }
 
-sub function2 {
+    my $budget = decode_json $budget_data;
+    print join(',', keys %{$budget})."\n";
+    $self->store_accounts($budget->{accounts});
+    $self->store_categories($budget->{masterCategories});
+    $self->store_budgets($budget->{monthlyBudgets});
 }
+
+1;
 
 =head1 AUTHOR
 
@@ -58,9 +94,6 @@ nc00mshku, C<< <nc00mshku at pastywhitesoftware.com> >>
 Please report any bugs or feature requests to C<bug-finance-ynab4 at rt.cpan.org>, or through
 the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Finance-YNAB4>.  I will be notified, and then you'll
 automatically be notified of progress on your bug as I make changes.
-
-
-
 
 =head1 SUPPORT
 
