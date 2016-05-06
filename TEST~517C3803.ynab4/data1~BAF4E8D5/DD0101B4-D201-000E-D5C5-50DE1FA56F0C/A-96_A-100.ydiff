@@ -1,0 +1,68 @@
+{
+  "dataVersion": "4.2",
+  "startVersion": "A-96",
+  "shortDeviceId": "A",
+  "endVersion": "A-100",
+  "formatVersion": null,
+  "items": [
+    {
+      "name": "Personal Loan Payment",
+      "entityVersion": "A-97",
+      "madeWithKnowledge": null,
+      "isTombstone": true,
+      "isResolvedConflict": false,
+      "entityId": "A38",
+      "sortableIndex": 1610612735,
+      "entityType": "category",
+      "note": null,
+      "type": "OUTFLOW",
+      "cachedBalance": null,
+      "masterCategoryId": "A35"
+    },
+    {
+      "name": "Student Loan Payment",
+      "entityVersion": "A-98",
+      "madeWithKnowledge": null,
+      "isTombstone": true,
+      "isResolvedConflict": false,
+      "entityId": "A37",
+      "sortableIndex": 1073741823,
+      "entityType": "category",
+      "note": null,
+      "type": "OUTFLOW",
+      "cachedBalance": null,
+      "masterCategoryId": "A35"
+    },
+    {
+      "name": "Car Payment",
+      "entityVersion": "A-99",
+      "madeWithKnowledge": null,
+      "isTombstone": true,
+      "isResolvedConflict": false,
+      "entityId": "A36",
+      "sortableIndex": 0,
+      "entityType": "category",
+      "note": null,
+      "type": "OUTFLOW",
+      "cachedBalance": null,
+      "masterCategoryId": "A35"
+    },
+    {
+      "name": "Debt",
+      "entityVersion": "A-100",
+      "madeWithKnowledge": null,
+      "isTombstone": true,
+      "isResolvedConflict": false,
+      "entityId": "A35",
+      "sortableIndex": 2139095039,
+      "entityType": "masterCategory",
+      "note": null,
+      "expanded": true,
+      "type": "OUTFLOW",
+      "deleteable": true
+    }
+  ],
+  "publishTime": "Thu May 5 21:28:09 GMT-0500 2016",
+  "deviceGUID": "DD0101B4-D201-000E-D5C5-50DE1FA56F0C",
+  "budgetDataGUID": null
+}
