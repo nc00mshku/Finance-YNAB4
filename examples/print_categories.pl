@@ -8,13 +8,11 @@ my $budget = 'TEST~517C3803.ynab4';
 
 my $ynab4 = Finance::YNAB4->new(budget_file => $budget);
 
-for my $cat (@{$ynab4->categories}) {
-    my $master_category = $cat->{name};
-    next if ($master_category =~ /(Hidden Categories|__Internal__|Income)/);
-    next if ($cat->{isTombstone});
-    print "$master_category\n";
-    for my $sub_category (@{$cat->{subCategories}}) {
-    	next if ($sub_category->{isTombstone});
-    	print "\t".$sub_category->{name}."\n";
+my $categories = $ynab4->get_categories({allow_hidden=>0});
+
+for my $cat (keys %{$categories}) {
+    print "$cat|".$categories->{$cat}->{name}."\n";
+    for my $sub_cat (@{$categories->{$cat}->{sub_cats}}) {
+	print "\t".$sub_cat->{entityId}."|".$sub_cat->{name}."\n";
     }
 }

@@ -7,7 +7,6 @@ use Moose;
 use namespace::autoclean;
 use Sort::Naturally;
 use JSON;
-use Data::Printer;
 
 =head1 NAME
 
@@ -50,9 +49,37 @@ sub BUILD {
 
     return array of category names
 
+    { allow_hidden => 0,
+      allow_deleted => 0,
+      allow_internal => 0,  # older budget files include __INTERNAL__ categories which aren't part of actual budget
+    }
 =cut
 sub get_categories {
-    my $self = shift;
+    my ( $self, $attrs ) = @_;
+
+    my @exclude = ();
+    push @exclude, 'Hidden Categories' unless ($attrs->{allow_hidden});
+    push @exclude, '__Internal__|Income' unless ($attrs->{allow_internal});
+    my $re_skip = '('.join('|',@exclude).')';
+
+    my $cat_hr = {};
+    for my $cat (@{$self->categories}) {
+	my $master_category = $cat->{name};
+	my $master_entity = $cat->{entityId};
+	next if ($master_category =~ qr/$re_skip/);
+	next if ($cat->{isTombstone} && !$attrs->{allow_deleted});
+	$cat_hr->{$master_entity} = {name => $master_category, sub_cats => [] };
+	for my $sub_category (@{$cat->{subCategories}}) {
+	    my $sub_cat_name = $sub_category->{name};
+	    next if ($sub_category->{isTombstone} && !$attrs->{allow_deleted});
+	    my $sub_hash = { name => $sub_cat_name,
+			     entityId => $sub_category->{entityId},
+			     masterEntityId => $master_entity,
+	    };
+	    push @{$cat_hr->{$master_entity}->{sub_cats}}, $sub_hash;
+	}
+    }
+    return $cat_hr;
 }
 
 =head2 parse_budet
@@ -69,6 +96,7 @@ sub parse_budget {
     my $data_file_name = '/*/Budget.yfull';
     my @files = nsort glob "$ynab4_dir".$data_file_name;
     my $budget_file = pop @files;
+
     my $budget_data;
     {
         local $/;
@@ -77,7 +105,6 @@ sub parse_budget {
     }
 
     my $budget = decode_json $budget_data;
-    print join(',', keys %{$budget})."\n";
     $self->store_accounts($budget->{accounts});
     $self->store_categories($budget->{masterCategories});
     $self->store_budgets($budget->{monthlyBudgets});
