@@ -4,7 +4,7 @@ use FindBin qw/$Bin/;
 use lib "$Bin/../lib";
 use Finance::YNAB4;
 use Data::Printer;
-my $budget = 'Test~4AC3463B.ynab4';
+my $budget = 'TEST~517C3803.ynab4';
 
 my $ynab4 = Finance::YNAB4->new(budget_file => $budget);
 p $ynab4->budgets;die;
