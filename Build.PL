@@ -16,8 +16,9 @@ my $builder = Module::Build->new(
         'Test::More' => 0,
     },
     requires => {
-        #'ABC'              => 1.6,
-        #'Foo::Bar::Module' => 5.0401,
+	'Moose' => 2.0,
+	'Sort::Naturally' => 1.03,
+	'JSON' => 2.25,
     },
     add_to_cleanup     => [ 'Finance-YNAB4-*' ],
     create_makefile_pl => 'traditional',
