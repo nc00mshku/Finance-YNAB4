@@ -18,14 +18,6 @@ Version 0.01
 
 =cut
 
-our $VERSION = '0.01';
-
-has 'budget_file', is => 'ro', isa => 'Str', required => 1;
-
-has 'accounts', is => 'ro', isa => 'ArrayRef', writer => 'store_accounts';
-has 'categories', is => 'ro', isa => 'ArrayRef', writer => 'store_categories';
-has 'budgets', is => 'ro', isa => 'ArrayRef', writer => 'store_budgets';
-
 =head1 SYNOPSIS
 
 Reads/Parses ynab4 json file
@@ -37,6 +29,27 @@ Reads/Parses ynab4 json file
     my @categories = $ynab4->categories;
 
 =cut
+
+our $VERSION = '0.01';
+
+has 'budget_file', is => 'ro', isa => 'Str', required => 1;
+
+=head2 RAW_DATA
+
+    read only accessors to raw imported JSON data:
+
+    accounts => 'ArrayRef'
+    categories => 'ArrayRef'
+    budgets => 'ArrayRef'
+
+=cut
+    
+has 'accounts', is => 'ro', isa => 'ArrayRef', writer => 'store_accounts';
+has 'categories', is => 'ro', isa => 'ArrayRef', writer => 'store_categories';
+has 'budgets', is => 'ro', isa => 'ArrayRef', writer => 'store_budgets';
+
+has '__budgeted', is => 'ro', isa => 'HashRef', builder => '__get_budgeted', lazy => 1, reader => 'get_budgeted';
+has '__categories', is => 'ro', isa => 'HashRef', builder=> '__get_categories', lazy => 1, reader => 'get_categories';
 
 sub BUILD {
     my $self = shift;
@@ -53,8 +66,9 @@ sub BUILD {
       allow_deleted => 0,
       allow_internal => 0,  # older budget files include __INTERNAL__ categories which aren't part of actual budget
     }
+
 =cut
-sub get_categories {
+sub __get_categories {
     my ( $self, $attrs ) = @_;
 
     my @exclude = ();
@@ -68,15 +82,14 @@ sub get_categories {
 	my $master_entity = $cat->{entityId};
 	next if ($master_category =~ qr/$re_skip/);
 	next if ($cat->{isTombstone} && !$attrs->{allow_deleted});
-	$cat_hr->{$master_entity} = {name => $master_category, sub_cats => [] };
+	$cat_hr->{$master_entity}->{name} = $master_category;
 	for my $sub_category (@{$cat->{subCategories}}) {
 	    my $sub_cat_name = $sub_category->{name};
 	    next if ($sub_category->{isTombstone} && !$attrs->{allow_deleted});
 	    my $sub_hash = { name => $sub_cat_name,
-			     entityId => $sub_category->{entityId},
 			     masterEntityId => $master_entity,
 	    };
-	    push @{$cat_hr->{$master_entity}->{sub_cats}}, $sub_hash;
+	    $cat_hr->{$sub_category->{entityId}} = $sub_hash;
 	}
     }
     return $cat_hr;
@@ -109,6 +122,53 @@ sub parse_budget {
     $self->store_categories($budget->{masterCategories});
     $self->store_budgets($budget->{monthlyBudgets});
 }
+
+=head2 get_budget_ids
+    
+    keys for budget data - includes month as part of keyname
+
+=cut
+sub get_budget_ids {
+    my $self = shift;
+    return [sort keys %{$self->get_budgeted}];
+}
+
+=head2 get_category_name
+
+    return name for a given category id
+
+=cut
+sub get_category_name {
+    my $self = shift;
+    my $id = shift;
+    
+    return $self->get_categories()->{$id}->{name};    
+}
+
+=head2 __get_budgeted
+
+    extract budgeted category ammounts
+
+=cut
+sub __get_budgeted {
+    my $self = shift;
+
+    my $budgeted_hr = {};
+    for my $budget (@{$self->budgets}) {
+	my $mcb_id = $budget->{entityId};
+	my $subs = $budget->{monthlySubCategoryBudgets};
+	next unless $subs;
+	for my $sub_cat (@$subs) {
+	    my $budgeted = $sub_cat->{budgeted};
+	    my $cat_id = $sub_cat->{categoryId};
+	    $budgeted_hr->{$mcb_id}->{$cat_id} = $budgeted;
+	}
+    }
+    return $budgeted_hr;
+}
+
+
+
 
 1;
 
