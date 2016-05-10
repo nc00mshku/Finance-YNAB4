@@ -118,6 +118,7 @@ sub parse_budget {
     }
 
     my $budget = decode_json $budget_data;
+
     $self->store_accounts($budget->{accounts});
     $self->store_categories($budget->{masterCategories});
     $self->store_budgets($budget->{monthlyBudgets});
@@ -155,10 +156,11 @@ sub __get_budgeted {
 
     my $budgeted_hr = {};
     for my $budget (@{$self->budgets}) {
-	my $mcb_id = $budget->{entityId};
+	my $mb_id = $budget->{entityId};
 	my $subs = $budget->{monthlySubCategoryBudgets};
 	next unless $subs;
 	for my $sub_cat (@$subs) {
+	    my $mcb_id = $sub_cat->{entityId};
 	    my $budgeted = $sub_cat->{budgeted};
 	    my $cat_id = $sub_cat->{categoryId};
 	    $budgeted_hr->{$mcb_id}->{$cat_id} = $budgeted;
